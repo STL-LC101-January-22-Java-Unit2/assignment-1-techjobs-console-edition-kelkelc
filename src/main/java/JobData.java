@@ -72,17 +72,16 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
-        for(HashMap<String, String> row : allJobs) {
-            //Iterates through each row by creating iterator variable "job".
-            for(Map.Entry<String, String> job : row.entrySet()){
-                if(job.getValue().toLowerCase().contains(value.toLowerCase()) && !jobs.contains(row)){
-                    jobs.add(row);
-                }
+        for (HashMap<String, String> row : allJobs) {
+
+            String aValue = row.get(column);
+
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
+                jobs.add(row);
             }
-
         }
-        return jobs;
 
+        return jobs;
     }
 
     /**
@@ -98,20 +97,24 @@ public class JobData {
 
         // TODO - implement this method
 
-        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        boolean duplicate = false;
 
-        for(HashMap<String, String> row: allJobs) {
+        ArrayList<HashMap<String, String>> valueJobs = new ArrayList<>();
+
+        for(HashMap<String, String> job: allJobs) {
 
             //iterate through each row
-            for(Map.Entry<String, String> key: row.entrySet()){
-                String aValue = key.getValue().toLowerCase();
+            for(String key: job.keySet()){
+                if (job.get(key).toLowerCase().contains(value.toLowerCase())) {
+                }
+            }
 
-                if (aValue.contains(value.toLowerCase()) && !(jobs.contains(row))) {
-                    jobs.add(row);
-             }
+            if (duplicate && !valueJobs.contains(job)) {
+                valueJobs.add(job);
+                duplicate = false;
             }
         }
-        return jobs;
+        return valueJobs;
     }
 
     /**
