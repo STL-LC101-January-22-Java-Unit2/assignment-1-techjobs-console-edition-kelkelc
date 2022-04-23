@@ -72,15 +72,15 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
-        for (HashMap<String, String> row : allJobs) {
-
-            String aValue = row.get(column);
-
-            if (aValue.toLowerCase().contains(value.toLowerCase())) {
-                jobs.add(row);
+        for(HashMap<String, String> row : allJobs) {
+            //Iterates through each row by creating iterator variable "job".
+            for(Map.Entry<String, String> job : row.entrySet()){
+                if(job.getValue().toLowerCase().contains(value.toLowerCase()) && !jobs.contains(row)){
+                    jobs.add(row);
+                }
             }
-        }
 
+        }
         return jobs;
     }
 
