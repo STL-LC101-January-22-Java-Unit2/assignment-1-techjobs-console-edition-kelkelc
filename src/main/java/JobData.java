@@ -72,39 +72,48 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
-        for (HashMap<String, String> row : allJobs) {
-
-            String aValue = row.get(column).toLowerCase();
-
-            if (aValue.contains(value)) {
-                jobs.add(row);
-            }
-        }
-
-        return jobs;
-    }
-
-    public static ArrayList<HashMap<String, String>> findByValue(String searchTerm){
-
-        loadData(); //be sure data is loaded.
-
-        ArrayList<HashMap<String, String>> jobMatch = new ArrayList<>(); // HashMap to return.
-
-        //iterate through jobs
-        for (HashMap<String, String> row : allJobs) {
-            //iterate through values
-            for (Map.Entry<String, String> job: row.entrySet()){
-                String aValue = job.getValue().toLowerCase();
-                //check for duplicates
-                if (aValue.contains(searchTerm.toLowerCase()) && !(jobMatch.contains(row))) {
-                    // add to HashMap once.
-                    jobMatch.add(row);
+        // TODO - implement this method
+        for(HashMap<String, String> row : allJobs) {
+            //Iterates through each row by creating iterator variable "job".
+            for(Map.Entry<String, String> job : row.entrySet()){
+                if(job.getValue().toLowerCase().contains(value.toLowerCase()) && !jobs.contains(row)){
+                    jobs.add(row);
                 }
             }
+
         }
-        return jobMatch;
+        return jobs;
+
     }
 
+    /**
+     * Search all columns for the given term
+     *
+     * @param value The search term to look for
+     * @return      List of all jobs with at least one field containing the value
+     */
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+
+        // load data, if not already loaded
+        loadData();
+
+        // TODO - implement this method
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        for(HashMap<String, String> row: allJobs) {
+
+            //iterate through each row
+            for(Map.Entry<String, String> key: row.entrySet()){
+                String aValue = key.getValue().toLowerCase();
+
+                if (aValue.contains(value.toLowerCase()) && !(jobs.contains(row))) {
+                    jobs.add(row);
+             }
+            }
+        }
+        return jobs;
+    }
 
     /**
      * Read in data from a CSV file and store it in a list
