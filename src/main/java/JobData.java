@@ -106,6 +106,7 @@ public class JobData {
             //iterate through each row
             for(String key: job.keySet()){
                 if (job.get(key).toLowerCase().contains(value.toLowerCase())) {
+                    duplicate = true;
                 }
             }
 
