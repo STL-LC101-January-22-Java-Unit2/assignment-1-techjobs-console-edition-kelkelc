@@ -5,7 +5,10 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by LaunchCode
@@ -51,7 +54,7 @@ public class JobData {
         loadData();
 
         // Bonus mission; normal version returns allJobs
-        return new ArrayList<>(allJobs);
+        return (ArrayList<HashMap<String, String>>) allJobs.clone();
     }
 
     /**
@@ -72,17 +75,16 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
-        for(HashMap<String, String> row : allJobs) {
-            //Iterates through each row by creating iterator variable "job".
-            for(Map.Entry<String, String> job : row.entrySet()){
-                if(job.getValue().toLowerCase().contains(value.toLowerCase()) && !jobs.contains(row)){
-                    jobs.add(row);
-                }
+        for (HashMap<String, String> row : allJobs) {
+
+            String aValue = row.get(column);
+
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
+                jobs.add(row);
             }
-
         }
-        return jobs;
 
+        return jobs;
     }
 
     /**
@@ -96,22 +98,22 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-        // TODO - implement this method
+        boolean duplicate = false;
 
-        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
-
-        for(HashMap<String, String> row: allJobs) {
-
-            //iterate through each row
-            for(Map.Entry<String, String> key: row.entrySet()){
-                String aValue = key.getValue().toLowerCase();
-
-                if (aValue.contains(value.toLowerCase()) && !(jobs.contains(row))) {
-                    jobs.add(row);
+        ArrayList<HashMap<String, String>> jobValue = new ArrayList<>();
+        for (HashMap<String, String> job : allJobs) {
+            for (String key: job.keySet()) {
+                if (job.get(key).toLowerCase().contains(value.toLowerCase())) {
+                    duplicate = true;
                 }
             }
+
+            if (duplicate && !jobValue.contains(job)) {
+                jobValue.add(job);
+                duplicate = false;
+            }
         }
-        return jobs;
+        return jobValue;
     }
 
     /**
