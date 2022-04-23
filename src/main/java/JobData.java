@@ -72,7 +72,6 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
-        // TODO - implement this method
         for(HashMap<String, String> row : allJobs) {
             //Iterates through each row by creating iterator variable "job".
             for(Map.Entry<String, String> job : row.entrySet()){
