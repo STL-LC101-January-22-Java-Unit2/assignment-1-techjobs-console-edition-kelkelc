@@ -54,7 +54,9 @@ public class JobData {
         loadData();
 
         // Bonus mission; normal version returns allJobs
-        return new ArrayList<>(allJobs);
+//        ArrayList<HashMap<String, String>> copyAllJobs = new ArrayList<HashMap<String, String>>(allJobs);
+//        return new ArrayList<>(copyAllJobs);
+        return (ArrayList<HashMap<String, String>>) allJobs.clone();
     }
 
     /**
@@ -79,7 +81,7 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -98,8 +100,26 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-        // TODO - implement this method
-        return null;
+        boolean duplicate = false;
+
+        ArrayList<HashMap<String, String>> jobValue = new ArrayList<>();
+        //iterate through jobs
+        for (HashMap<String, String> job : allJobs) {
+            //iterate through jobs values
+            for (String key: job.keySet()) {
+                //check for duplicates
+                if (job.get(key).toLowerCase().contains(value.toLowerCase())) {
+                    duplicate = true;
+                }
+            }
+
+            if (duplicate && !jobValue.contains(job)) {
+                //add to HashMap one time
+                jobValue.add(job);
+                duplicate = false;
+            }
+        }
+        return jobValue;
     }
 
     /**
